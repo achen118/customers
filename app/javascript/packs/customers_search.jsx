@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CustomerTable from '../components/CustomerTable';
+import CustomerSearch from '../components/CustomerSearch';
 
 
 document.addEventListener("DOMContentLoaded", e => {
-  ReactDOM.render(<CustomerTable />, document.body.appendChild(document.createElement('div')))
+  ReactDOM.render(<CustomerSearch />, document.body.appendChild(document.createElement('div')))
 })

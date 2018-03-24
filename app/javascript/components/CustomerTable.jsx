@@ -2,18 +2,8 @@ import React from 'react';
 import CustomerRow from "./CustomerRow";
 
 export default class CustomerTable extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      customers: [
-        {firstName: 'Jordy', lastName: 'Nelson'},
-        {firstName: 'Randall', lastName: 'Cobb'}
-      ]
-    }
-  }
-
   render() {
-    var customerRows = this.state.customers.map(function(customer, index){
+    var customerRows = this.props.customers.map(function(customer, index){
       return (
         <CustomerRow
           key={index}
