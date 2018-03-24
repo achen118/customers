@@ -13,7 +13,7 @@ export default class CustomerTable extends React.Component {
     });
 
     return (
-      <table>
+      <table className='table'>
         <tbody>
           <tr>
             <th>First Name</th>

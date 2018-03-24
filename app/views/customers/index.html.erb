@@ -1,8 +1,10 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
+  <p id="notice"><%= notice %></p>
 
-<h1>Customers</h1>
-<div id="customer-search-table"></div>
-<br>
+  <h1>Customers</h1>
+  <div id="customer-search-table"></div>
+  <br>
 
-<%= link_to 'New Customer', new_customer_path %>
+  <%= link_to 'New Customer', new_customer_path %>
+</div>
 <%= javascript_pack_tag 'customers_search' %>
