@@ -1,5 +1,6 @@
 import React from 'react';
 import CustomerTable from "./CustomerTable";
+import 'whatwg-fetch';
 
 class CustomerSearch extends React.Component {
   constructor(props) {
@@ -25,7 +26,6 @@ class CustomerSearch extends React.Component {
       return false;
     }
 
-
     window.history.replaceState(null, null, "/customers?query="+event.target.value);
     if (event.target.value === ""){
       this.setState({
@@ -49,17 +49,18 @@ class CustomerSearch extends React.Component {
   }
 
   fetchCustomers(query){
-    // var _this = this;
-    // fetch('/customers.json?query='+query)
-    // .then(response => { return response.json(); })
-    // .then(function(data){
-    //   // Need to ensure slower requests dont override the results we want
-    //   if (_this.state.searchQuery === data["query"]){
-    //     _this.setState(
-    //       { customers: data["customers"], loading: false,  }
-    //     )
-    //   }
-    // });
+    fetch('/customers.json?query='+query).then(response => { return response.json(); }).catch((error) => {
+      console.log("Error occured getting results")
+    }).then((data) => {
+      // Need to ensure slower requests dont override the results we want
+      if (this.state.searchQuery === data["query"]){
+        this.setState(
+          { customers: data["customers"], loading: false,  }
+        )
+      }
+    }).catch((error) => {
+      console.log("Error occured parsing results")
+    });
   }
 
   render() {
