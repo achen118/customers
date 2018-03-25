@@ -1,7 +1,8 @@
 const CustomerReducer = {
   initialState: {
     searchQuery: "",
-    customers: []
+    customers: [],
+    allCustomers: []
   },
   getFilteredCustomers: function(query, customers){
     if (query === ''){
@@ -18,23 +19,25 @@ const CustomerReducer = {
     return filteredCustomers;
   },
   reducer: function(state, action){
-    console.log("reducer called with action type: " + action.type)
     state = state || CustomerReducer.initialState
     var newSearchQuery = state.searchQuery;
-    var newCustomers = state.customers;
+    var filteredCustomers = state.customers;
+    var allCustomers = state.allCustomers;
     if (action.type == "UPDATE_SEARCH_PARAMETER"){
       newSearchQuery = action.newValue;
-      newCustomers = CustomerReducer.getFilteredCustomers(newSearchQuery, newCustomers);
+      filteredCustomers = CustomerReducer.getFilteredCustomers(newSearchQuery, allCustomers);
+      if (typeof(window) !== 'undefined' && typeof(window.history) !== 'undefined'){
+        window.history.replaceState(null, null, "/customers?query="+newSearchQuery);
+      }
     } else if (action.type == "UPDATE_CUSTOMERS"){
-      newCustomers = action.newCustomers;
-      console.log("Updating customers based on the query: " + state.searchQuery)
-      newCustomers = CustomerReducer.getFilteredCustomers(newSearchQuery, newCustomers);
+      allCustomers = action.newCustomers;
+      filteredCustomers = CustomerReducer.getFilteredCustomers(newSearchQuery, allCustomers);
     }
-    console.log("returning new customers:")
-    console.log(newCustomers)
+
     return {
       searchQuery: newSearchQuery,
-      customers: newCustomers
+      customers: filteredCustomers,
+      allCustomers: allCustomers
     }
   }
 }
