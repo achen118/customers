@@ -59,12 +59,11 @@ RSpec.describe CustomersController, type: :controller do
       get :index, params: {}, format: :json, session: valid_session
       expect(response).to be_success
 
-      Rails.logger.info "response: #{response.body.inspect}"
-      json = JSON.parse(response.body)
+      json_response = JSON.parse(response.body)
+      matched_customers = json_response["customers"]
 
-      Rails.logger.info "Keys: #{json[0].keys.inspect}"
-      expect(json[0].keys).to include("firstName")
-      expect(json[0].keys).to include("lastName")
+      expect(matched_customers[0].keys).to include("firstName")
+      expect(matched_customers[0].keys).to include("lastName")
     end
   end
 
@@ -78,11 +77,11 @@ RSpec.describe CustomersController, type: :controller do
       get :index, params: { query: "net"}, format: :json, session: valid_session
       expect(response).to be_success
 
-      Rails.logger.info "response: #{response.body.inspect}"
-      matched_customers = JSON.parse(response.body)
+      json_response = JSON.parse(response.body)
+      expect(json_response["query"]).to eq("net")
+      matched_customers = json_response["customers"]
       expect(matched_customers.length).to eq(1)
 
-      # Rails.logger.info "Keys: #{json[0].keys.inspect}"
       expect(matched_customers[0]["firstName"]).to eq("Morgan")
       expect(matched_customers[0]["lastName"]).to eq("Burnet")
     end
