@@ -4,5 +4,11 @@ import CustomerSearch from '../components/CustomerSearch';
 
 
 document.addEventListener("DOMContentLoaded", e => {
-  ReactDOM.render(<CustomerSearch />, document.getElementById('customer-search-table').appendChild(document.createElement('div')))
+  var customerData = document.getElementById('customer_data');
+  var customers = JSON.parse(customerData.getAttribute('data'));
+
+  ReactDOM.render(
+    <CustomerSearch customers={customers} />,
+    document.getElementById('customer-search-table').appendChild(document.createElement('div'))
+  );
 })

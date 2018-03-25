@@ -12,11 +12,6 @@ class CustomerRow extends React.Component {
   }
 }
 
-CustomerRow.defaultProps = {
-  firstName: 'David',
-  lastName: 'Ortiz'
-}
-
 CustomerRow.propTypes = {
   firstName: PropTypes.string,
   lastName: PropTypes.string
