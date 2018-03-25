@@ -4,8 +4,12 @@ import CustomerTable from "./CustomerTable";
 class CustomerSearch extends React.Component {
   constructor(props) {
     super(props);
+    var initialSearchQuery = "";
+    if (typeof(window) !== 'undefined' && typeof(window.location) !== 'undefined' && typeof(window.location.hash) !== 'undefined'){
+      initialSearchQuery = window.location.hash.replace(/#/, '');
+    }
     this.state = {
-      searchQuery: '',
+      searchQuery: initialSearchQuery,
       customers: []
     }
     this.inputChange = this.inputChange.bind(this);
@@ -15,6 +19,7 @@ class CustomerSearch extends React.Component {
     this.setState({
       searchQuery: event.target.value
     });
+    window.location.hash = '#' + event.target.value;
   }
 
   componentWillMount() {
