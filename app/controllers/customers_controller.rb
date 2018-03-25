@@ -7,9 +7,9 @@ class CustomersController < ApplicationController
     @query = params[:query]
     if @query.present?
       db_parameter = "%#{@query}%"
-      @customers = Customer.where('first_name like ? OR last_name like ?', db_parameter, db_parameter).limit(100)
+      @customers = Customer.where('first_name like ? OR last_name like ?', db_parameter, db_parameter)
     else
-      @customers = Customer.all.limit(10)
+      @customers = Customer.all
     end
   end
 

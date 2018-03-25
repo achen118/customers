@@ -12,7 +12,7 @@ class CustomerSearch extends React.Component {
     this.state = {
       searchQuery: initialSearchQuery,
       customers: [],
-      loading: true
+      loading: null
     }
     this.inputChange = this.inputChange.bind(this);
   }
@@ -39,13 +39,11 @@ class CustomerSearch extends React.Component {
     ));
   }
 
-  componentWillMount() {
-    this.fetchCustomers(this.state.searchQuery)
-  }
-
   render() {
-    var resultsContent = "Loading..."
-    if (!this.state.loading){
+    var resultsContent = "Enter a query to get started";
+    if (this.state.loading === true){
+      resultsContent = "Loading Results..."
+    } else if (this.state.loading === false) {
       resultsContent = (<CustomerTable customers={this.state.customers} />)
     }
     return (
