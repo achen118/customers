@@ -6,13 +6,15 @@ class CustomerSearch extends React.Component {
     super(props);
 
     var initialSearchQuery = "";
+    var loading = null;
     if (this.props.searchQuery && this.props.searchQuery !== ""){
       initialSearchQuery = this.props.searchQuery;
+      loading = true;
     }
     this.state = {
       searchQuery: initialSearchQuery,
       customers: [],
-      loading: null
+      loading: loading
     }
     this.inputChange = this.inputChange.bind(this);
   }
@@ -23,12 +25,27 @@ class CustomerSearch extends React.Component {
       return false;
     }
 
-    window.history.replaceState(null, null, "/customers?query="+event.target.value)
+
+    window.history.replaceState(null, null, "/customers?query="+event.target.value);
+    if (event.target.value === ""){
+      this.setState({
+        loading: null,
+        searchQuery: event.target.value
+      });
+      return false;
+    }
+
     this.fetchCustomers(event.target.value);
     this.setState({
       searchQuery: event.target.value,
       loading: true
     });
+  }
+
+  componentWillMount(){
+    if(this.state.searchQuery !== ""){
+      this.fetchCustomers(this.state.searchQuery);
+    }
   }
 
   fetchCustomers(query){
@@ -40,7 +57,7 @@ class CustomerSearch extends React.Component {
   }
 
   render() {
-    var resultsContent = "Enter a query to get started";
+    var resultsContent = "Enter a name to get started";
     if (this.state.loading === true){
       resultsContent = "Loading Results..."
     } else if (this.state.loading === false) {
