@@ -20,7 +20,7 @@
   },
   "jest": {
     "roots": [
-      "test/javascript"
+      "spec/javascript"
     ]
   }
 }

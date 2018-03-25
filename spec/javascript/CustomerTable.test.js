@@ -21,3 +21,13 @@ test('Render 3 customer rows', () => {
     expect(myRow.props.lastName).toBe(customers[i].lastName);
   }
 });
+
+test('Inital loading display', () => {
+  var customers = [];
+  const component = renderer.create(
+    <CustomerTable customers={customers} />,
+  );
+  var testInstance = component.root;
+  var rows = testInstance.findAllByType(CustomerRow)
+  expect(rows.length).toBe(0);
+});

@@ -49,17 +49,17 @@ class CustomerSearch extends React.Component {
   }
 
   fetchCustomers(query){
-    var _this = this;
-    fetch('/customers.json?query='+query)
-    .then(response => { return response.json(); })
-    .then(function(data){
-      // Need to ensure slower requests dont override the results we want
-      if (_this.state.searchQuery === data["query"]){
-        _this.setState(
-          { customers: data["customers"], loading: false,  }
-        )
-      }
-    });
+    // var _this = this;
+    // fetch('/customers.json?query='+query)
+    // .then(response => { return response.json(); })
+    // .then(function(data){
+    //   // Need to ensure slower requests dont override the results we want
+    //   if (_this.state.searchQuery === data["query"]){
+    //     _this.setState(
+    //       { customers: data["customers"], loading: false,  }
+    //     )
+    //   }
+    // });
   }
 
   render() {
