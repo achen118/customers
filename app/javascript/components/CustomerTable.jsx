@@ -13,7 +13,7 @@ export default class CustomerTable extends React.Component {
     });
 
     return (
-      <table className='table'>
+      <table className='table table-striped'>
         <tbody>
           <tr>
             <th>First Name</th>
