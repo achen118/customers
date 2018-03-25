@@ -31,8 +31,10 @@ class CustomerSearch extends React.Component {
 
     return this.state.customers.filter(function(customer){
       var fullName = customer.firstName + ' ' + customer.lastName;
-      // TODO: We should add case insensitive searching
-      return fullName.indexOf(currentSearchQuery) !== -1;
+      // Decided to make this case insensitive for UX reasons
+      //  Assuming its probably a little easier to users if they dont need to
+      // worry about case
+      return fullName.toLowerCase().indexOf(currentSearchQuery.toLowerCase()) !== -1;
     });
   }
 
