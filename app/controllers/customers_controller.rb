@@ -5,7 +5,12 @@ class CustomersController < ApplicationController
   # GET /customers.json
   def index
     @query = params[:query]
-    @customers = Customer.all
+    if @query.present?
+      db_parameter = "%#{@query}%"
+      @customers = Customer.where('first_name like ? OR last_name like ?', db_parameter, db_parameter).limit(100)
+    else
+      @customers = Customer.all.limit(10)
+    end
   end
 
   # GET /customers/1

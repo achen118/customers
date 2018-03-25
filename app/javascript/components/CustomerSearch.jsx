@@ -11,42 +11,43 @@ class CustomerSearch extends React.Component {
     }
     this.state = {
       searchQuery: initialSearchQuery,
-      customers: []
+      customers: [],
+      loading: true
     }
     this.inputChange = this.inputChange.bind(this);
   }
 
   inputChange(event) {
-    this.setState({
-      searchQuery: event.target.value
-    });
+    if (this.state.searchQuery == event.target.value){
+      //query didnt change
+      return false;
+    }
+
     window.history.replaceState(null, null, "/customers?query="+event.target.value)
+    this.fetchCustomers(event.target.value);
+    this.setState({
+      searchQuery: event.target.value,
+      loading: true
+    });
+  }
+
+  fetchCustomers(query){
+    fetch('/customers.json?query='+query)
+    .then(response => { return response.json(); })
+    .then(data => this.setState(
+      { customers: data, loading: false,  }
+    ));
   }
 
   componentWillMount() {
-    fetch('/customers.json')
-    .then(response => { return response.json(); })
-    .then(data => this.setState({ customers: data }));
-  }
-
-  getFilteredCustomers() {
-    if (this.state.searchQuery === ''){
-      return this.state.customers;
-    }
-    var currentSearchQuery = this.state.searchQuery;
-
-    return this.state.customers.filter(function(customer){
-      var fullName = customer.firstName + ' ' + customer.lastName;
-      // Decided to make this case insensitive for UX reasons
-      //  Assuming its probably a little easier to users if they dont need to
-      // worry about case
-      return fullName.toLowerCase().indexOf(currentSearchQuery.toLowerCase()) !== -1;
-    });
+    this.fetchCustomers(this.state.searchQuery)
   }
 
   render() {
-    var filteredCustomers = this.getFilteredCustomers();
-
+    var resultsContent = "Loading..."
+    if (!this.state.loading){
+      resultsContent = (<CustomerTable customers={this.state.customers} />)
+    }
     return (
       <div>
         <div className="customer-search-input">
@@ -55,7 +56,7 @@ class CustomerSearch extends React.Component {
             <input type="text" value={this.state.searchQuery} onChange={this.inputChange}/>
           </label>
         </div>
-        <CustomerTable customers={filteredCustomers} />
+        {resultsContent}
       </div>
     );
   }
