@@ -1,24 +1,18 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
+* Ruby version: ruby 2.4.1p111
 
 * System dependencies
+-- bundler (1.16.1)
+-- node (9.9.0)
+-- yarn (1.5.1)
 
-* Configuration
-
-* Database creation
+* Setup
+-- bundle install
+-- yarn install
+-- rake db:create
 
 * Database initialization
 
 * How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+-- yarn test

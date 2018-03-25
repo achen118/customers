@@ -41,12 +41,4 @@ class CustomerSearch extends React.Component {
   }
 }
 
-CustomerSearch.defaultProps = {
-  customers: [
-    {firstName: 'Jordy', lastName: 'Nelson'},
-    {firstName: 'Randall', lastName: 'Cobb'},
-    {firstName: 'Johnny', lastName: 'McNally'}
-  ]
-}
-
 export default CustomerSearch;
