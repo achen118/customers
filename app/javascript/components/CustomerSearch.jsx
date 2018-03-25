@@ -5,7 +5,8 @@ class CustomerSearch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchQuery: ''
+      searchQuery: '',
+      customers: []
     }
     this.inputChange = this.inputChange.bind(this);
   }
@@ -16,13 +17,19 @@ class CustomerSearch extends React.Component {
     });
   }
 
+  componentWillMount() {
+    fetch('/customers.json')
+    .then(response => { return response.json(); })
+    .then(data => this.setState({ customers: data }));
+  }
+
   getFilteredCustomers() {
     if (this.state.searchQuery === ''){
-      return this.props.customers;
+      return this.state.customers;
     }
     var currentSearchQuery = this.state.searchQuery;
 
-    return this.props.customers.filter(function(customer){
+    return this.state.customers.filter(function(customer){
       var fullName = customer.firstName + ' ' + customer.lastName;
       // TODO: We should add case insensitive searching
       return fullName.indexOf(currentSearchQuery) !== -1;

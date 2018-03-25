@@ -7,8 +7,4 @@
 
   <%= link_to 'New Customer', new_customer_path %>
 </div>
-<%= content_tag :div,
-  id: "customer_data",
-  data: @customers.collect{|customer| {firstName: customer.first_name, lastName: customer.last_name}}.to_json do %>
-<% end %>
 <%= javascript_pack_tag 'customers_search' %>

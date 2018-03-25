@@ -49,6 +49,25 @@ RSpec.describe CustomersController, type: :controller do
     end
   end
 
+  describe "GET #index JSON" do
+    render_views
+    it "returns a success response" do
+      Customer.create!(
+        first_name: "Sam",
+        last_name: "Shields"
+      )
+      get :index, params: {}, format: :json, session: valid_session
+      expect(response).to be_success
+
+      Rails.logger.info "response: #{response.body.inspect}"
+      json = JSON.parse(response.body)
+
+      Rails.logger.info "Keys: #{json[0].keys.inspect}"
+      expect(json[0].keys).to include("firstName")
+      expect(json[0].keys).to include("lastName")
+    end
+  end
+
   describe "GET #show" do
     it "returns a success response" do
       customer = Customer.create! valid_attributes
