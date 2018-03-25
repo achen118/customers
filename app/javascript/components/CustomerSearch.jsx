@@ -41,7 +41,12 @@ class CustomerSearch extends React.Component {
 
     return (
       <div>
-        <input type="text" onChange={this.inputChange}/>
+        <div className="customer-search-input">
+          <label>
+            Search Customers by name:
+            <input type="text" onChange={this.inputChange}/>
+          </label>
+        </div>
         <CustomerTable customers={filteredCustomers} />
       </div>
     );
