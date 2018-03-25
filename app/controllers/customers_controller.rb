@@ -4,6 +4,7 @@ class CustomersController < ApplicationController
   # GET /customers
   # GET /customers.json
   def index
+    @query = params[:query]
     @customers = Customer.all
   end
 

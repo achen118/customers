@@ -4,9 +4,10 @@ import CustomerTable from "./CustomerTable";
 class CustomerSearch extends React.Component {
   constructor(props) {
     super(props);
+
     var initialSearchQuery = "";
-    if (typeof(window) !== 'undefined' && typeof(window.location) !== 'undefined' && typeof(window.location.hash) !== 'undefined'){
-      initialSearchQuery = window.location.hash.replace(/#/, '');
+    if (this.props.searchQuery && this.props.searchQuery !== ""){
+      initialSearchQuery = this.props.searchQuery;
     }
     this.state = {
       searchQuery: initialSearchQuery,
@@ -19,7 +20,7 @@ class CustomerSearch extends React.Component {
     this.setState({
       searchQuery: event.target.value
     });
-    window.location.hash = '#' + event.target.value;
+    window.history.replaceState(null, null, "/customers?query="+event.target.value)
   }
 
   componentWillMount() {
@@ -51,7 +52,7 @@ class CustomerSearch extends React.Component {
         <div className="customer-search-input">
           <label>
             Search Customers by name:
-            <input type="text" onChange={this.inputChange}/>
+            <input type="text" value={this.state.searchQuery} onChange={this.inputChange}/>
           </label>
         </div>
         <CustomerTable customers={filteredCustomers} />
