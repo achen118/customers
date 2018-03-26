@@ -40,5 +40,8 @@ test('Update Query', () => {
 
   const input = wrapper.find('input');
   input.simulate('change', { target: { value: 'A' } });
+
+  expect(wrapper.state('searchQuery')).toBe('A');
+  expect(wrapper.state('loading')).toBe(true);
   expect(historyProp.replace.callCount).toBe(1);
 });
