@@ -21,11 +21,13 @@ class CustomerSearch extends React.Component {
   }
 
   inputChange(event) {
+    console.log("Hello from the inputChange")
     if (this.state.searchQuery == event.target.value){
       //query didnt change
       return false;
     }
-
+    console.log("window: ")
+    console.log(window.location)
     window.history.replaceState(null, null, "/customers?query="+event.target.value);
     if (event.target.value === ""){
       this.setState({

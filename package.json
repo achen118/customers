@@ -4,9 +4,13 @@
   "dependencies": {
     "@rails/webpacker": "^3.4.1",
     "babel-preset-react": "^6.24.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "jest-enzyme": "^6.0.0",
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "sinon": "^4.4.8",
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
@@ -20,6 +24,7 @@
     "test": "jest"
   },
   "jest": {
+    "setupTestFrameworkScriptFile": "./node_modules/jest-enzyme/lib/index.js",
     "roots": [
       "spec/javascript"
     ]
