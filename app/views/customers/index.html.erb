@@ -7,8 +7,5 @@
 
   <%= link_to 'New Customer', new_customer_path %>
 </div>
-<%= content_tag :div,
-  id: "search-query",
-  data: @query do %>
-<% end %>
+
 <%= javascript_pack_tag 'customers_search' %>
