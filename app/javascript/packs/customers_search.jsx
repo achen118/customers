@@ -5,8 +5,6 @@ import CustomerSearch from '../components/CustomerSearch';
 import { BrowserRouter,  Route, Router } from 'react-router-dom'
 
 document.addEventListener("DOMContentLoaded", e => {
-  var searchQueryNode = document.getElementById('search-query');
-  var searchQuery = searchQueryNode.getAttribute('data');
 
   ReactDOM.render(
     <BrowserRouter>
