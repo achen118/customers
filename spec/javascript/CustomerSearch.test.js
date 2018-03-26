@@ -1,12 +1,27 @@
 import React from 'react';
 import { mount, configure } from 'enzyme';
-import { JSDOM } from 'jsdom';
-
 import sinon from 'sinon';
-
 import Adapter from 'enzyme-adapter-react-16';
 configure({ adapter: new Adapter() });
 import CustomerSearch from '../../app/javascript/components/CustomerSearch';
+
+beforeEach(function() {
+  global.fetch = jest.fn().mockImplementation(() => {
+      var p = new Promise((resolve, reject) => {
+        resolve({
+          ok: true,
+          Id: '123',
+          json: function() {
+            return {query: 'A', customers: [
+              { firstName: 'Alan', lastName: 'Jones'}
+            ]}
+          }
+        });
+      });
+
+      return p;
+  });
+});
 
 test('Empty initial Query', () => {
   const wrapper = mount(
@@ -39,9 +54,10 @@ test('Update Query', () => {
   const wrapper = mount(<CustomerSearch location={locationProp} history={historyProp}/>);
 
   const input = wrapper.find('input');
-  input.simulate('change', { target: { value: 'A' } });
+  input.simulate('change', { target: { value: 'A' } })
 
   expect(wrapper.state('searchQuery')).toBe('A');
   expect(wrapper.state('loading')).toBe(true);
+  expect(wrapper.state('customers')).toEqual([]);
   expect(historyProp.replace.callCount).toBe(1);
 });
