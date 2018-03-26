@@ -1,5 +1,4 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
 import { mount, configure } from 'enzyme';
 import { JSDOM } from 'jsdom';
 
@@ -10,14 +9,13 @@ configure({ adapter: new Adapter() });
 import CustomerSearch from '../../app/javascript/components/CustomerSearch';
 
 test('Empty initial Query', () => {
-  const component = renderer.create(
+  const wrapper = mount(
     <CustomerSearch />,
   );
-  var testInstance = component.root;
 
-  expect(testInstance.instance.state.searchQuery).toBe("");
-  expect(testInstance.instance.state.customers).toEqual([]);
-  expect(testInstance.instance.state.loading).toBe(null);
+  expect(wrapper.state('searchQuery')).toBe('');
+  expect(wrapper.state('customers')).toEqual([]);
+  expect(wrapper.state('loading')).toBe(null);
 });
 
 test('Passed initial Query', () => {
@@ -28,7 +26,7 @@ test('Passed initial Query', () => {
     <CustomerSearch location={locationProp} history={historyProp}/>,
   );
 
-  expect(wrapper.state('searchQuery')).toBe("john");
+  expect(wrapper.state('searchQuery')).toBe('john');
   expect(wrapper.state('customers')).toEqual([]);
   expect(wrapper.state('loading')).toBe(true);
   expect(historyProp.replace.callCount).toBe(0);
