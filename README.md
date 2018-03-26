@@ -20,3 +20,9 @@
 
 ## Generate data
 Rake task to generate users: bundle exec rake customer_setup:add_customers
+
+## Trying it out
+* start the server: bundle exec rails s
+* navigate to the home page: http://localhost:3000
+* input search query
+* view results!
