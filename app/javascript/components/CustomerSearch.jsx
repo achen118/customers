@@ -1,17 +1,20 @@
 import React from 'react';
 import CustomerTable from "./CustomerTable";
 import 'whatwg-fetch';
+import queryString from 'query-string';
 
 class CustomerSearch extends React.Component {
   constructor(props) {
     super(props);
-
-    var initialSearchQuery = "";
+    var initialSearchQuery = '';
     var loading = null;
-    if (this.props.searchQuery && this.props.searchQuery !== ""){
-      initialSearchQuery = this.props.searchQuery;
+
+    if (typeof(this.props.location) !== 'undefined' && typeof(this.props.location.search) !== 'undefined' && this.props.location.search !== ""){
+      var parsedHash = queryString.parse(this.props.location.search);
+      initialSearchQuery = parsedHash.query;
       loading = true;
     }
+
     this.state = {
       searchQuery: initialSearchQuery,
       customers: [],
@@ -21,15 +24,14 @@ class CustomerSearch extends React.Component {
   }
 
   inputChange(event) {
-    console.log("Hello from the inputChange")
     if (this.state.searchQuery == event.target.value){
       //query didnt change
       return false;
     }
-    console.log("window: ")
-    console.log(window.location)
-    window.history.replaceState(null, null, "/customers?query="+event.target.value);
-    if (event.target.value === ""){
+
+    this.props.history.replace('/customers?query='+event.target.value);
+
+    if (event.target.value === ''){
       this.setState({
         loading: null,
         searchQuery: event.target.value

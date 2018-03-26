@@ -21,31 +21,26 @@ test('Empty initial Query', () => {
 });
 
 test('Passed initial Query', () => {
-  const component = renderer.create(
-    <CustomerSearch searchQuery="john"/>,
-  );
-  var testInstance = component.root;
+  var locationProp = { search: 'query=john'};
+  var historyProp = {replace: sinon.spy() };
 
-  expect(testInstance.instance.state.searchQuery).toBe("john");
-  expect(testInstance.instance.state.customers).toEqual([]);
-  expect(testInstance.instance.state.loading).toBe(true);
+  const wrapper = mount(
+    <CustomerSearch location={locationProp} history={historyProp}/>,
+  );
+
+  expect(wrapper.state('searchQuery')).toBe("john");
+  expect(wrapper.state('customers')).toEqual([]);
+  expect(wrapper.state('loading')).toBe(true);
+  expect(historyProp.replace.callCount).toBe(0);
 });
 
 test('Update Query', () => {
-  const inputChange = sinon.spy();
-  const myDom = new JSDOM('<!DOCTYPE html><p>Hello world</p>', { url: "https://example.org/" });
-  const { window } = myDom;
-  global.window = window;
-  global.document = window.document;
-  // jsdom.changeURL(window, 'https://localhost:9001');
-  const wrapper = mount(<CustomerSearch />);
-  const input = wrapper.find('input');
-  console.log("Before")
-  console.log(wrapper.state());
+  var locationProp = { search: 'query=john'};
+  var historyProp = {replace: sinon.spy() };
 
+  const wrapper = mount(<CustomerSearch location={locationProp} history={historyProp}/>);
+
+  const input = wrapper.find('input');
   input.simulate('change', { target: { value: 'A' } });
-  console.log("After")
-  console.log(wrapper.state());
-  // expect(input.get(0).value).to.equal('Hello');
-  console.log(inputChange.callCount);
+  expect(historyProp.replace.callCount).toBe(1);
 });
